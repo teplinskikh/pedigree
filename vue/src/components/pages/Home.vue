@@ -9,6 +9,7 @@
     <EducationForm :education="education" />
     <WeddingForm :wedding="wedding" />
     <PersonForm :person="person" />
+    <weddings-list :weddings="weddingsData" />
   </PageLayout>
 </template>
 
@@ -20,6 +21,7 @@ import PhotoPreview from '../ui/PhotoPreview.vue'
 import EducationForm from '../forms/EducationForm.vue'
 import WeddingForm from '../forms/WeddingForm.vue'
 import PersonForm from '../forms/PersonForm.vue'
+import WeddingsList from '../parts/WeddingsList.vue';
 
 export default {
   name: 'HomePage',
@@ -30,7 +32,8 @@ export default {
     PersonCard,
     EducationForm,
     WeddingForm,
-    PersonForm
+    PersonForm,
+    WeddingsList
   },
   data () {
     return {
@@ -63,7 +66,19 @@ export default {
         endDate: '31.08.2023',
         institutionName: 'ВГУ',
         institutionCity: ''
-      }
+      },
+      weddingsData: [
+        {
+          person: { name: 'Иванов И.И.' },
+          date_start: '1999',
+          date_end: ''
+        },
+        {
+          person: { name: 'Петров П.И.' },
+          date_start: '2010',
+          date_end: '2020'
+        }
+      ]
     }
   }
 }
