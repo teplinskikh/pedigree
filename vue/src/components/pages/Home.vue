@@ -9,7 +9,7 @@
     <EducationForm :education="education" />
     <WeddingForm :wedding="wedding" />
     <PersonForm :person="person" />
-    <weddings-list :weddings="weddingsData" />
+    <WeddingsList :weddings="weddingsData" />
   </PageLayout>
 </template>
 
