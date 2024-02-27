@@ -31,7 +31,5 @@ export default {
   margin-bottom: 10px;
   text-align: center;
   max-width: 400px;
-  font-family: Arial;
-  font-weight: 600;
 }
 </style>

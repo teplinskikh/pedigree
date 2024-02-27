@@ -4,7 +4,7 @@
       Homepage
       <button @click="() => openHelpModal()">Open modal</button>
       <ElButton type="primary">Кнопка</ElButton>
-      <PersonCard :person="person" />
+      <PersonCard :person="person" :weddings="weddingsData" />
       <PhotoPreview size="large" photo="https://mykaleidoscope.ru/x/uploads/posts/2022-10/1666206241_12-mykaleidoscope-ru-p-kartinka-na-zastavku-oboi-12.jpg" />
       <EducationForm :education="education" />
       <WeddingForm :wedding="wedding" />
