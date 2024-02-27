@@ -3,12 +3,14 @@
     <section class="p-16">
       Homepage
       <button @click="() => openHelpModal()">Open modal</button>
-      <PersonCard :person="person" :weddings="weddingsData" />
+      <ElButton type="primary">Кнопка</ElButton>
+      <PersonCard :person="person" />
+      <PhotoPreview size="large" photo="https://mykaleidoscope.ru/x/uploads/posts/2022-10/1666206241_12-mykaleidoscope-ru-p-kartinka-na-zastavku-oboi-12.jpg" />
+      <EducationForm :education="education" />
+      <WeddingForm :wedding="wedding" />
+      <PersonForm :person="person" />
+      <MilitaryForm :military="military"/>
     </section>
-    <PhotoPreview size="large" photo="https://mykaleidoscope.ru/x/uploads/posts/2022-10/1666206241_12-mykaleidoscope-ru-p-kartinka-na-zastavku-oboi-12.jpg" />
-    <EducationForm :education="education" />
-    <WeddingForm :wedding="wedding" />
-    <PersonForm :person="person" />
   </PageLayout>
 </template>
 
@@ -20,6 +22,7 @@ import PhotoPreview from '../ui/PhotoPreview.vue'
 import EducationForm from '../forms/EducationForm.vue'
 import WeddingForm from '../forms/WeddingForm.vue'
 import PersonForm from '../forms/PersonForm.vue'
+import MilitaryForm from '../forms/MilitaryForm.vue'
 
 export default {
   name: 'HomePage',
@@ -31,6 +34,7 @@ export default {
     EducationForm,
     WeddingForm,
     PersonForm,
+    MilitaryForm,
   },
   data () {
     return {
@@ -64,6 +68,13 @@ export default {
         institutionName: 'ВГУ',
         institutionCity: ''
       },
+      military: {
+        type: 'Контракт',
+        rank: 'Рядовой',
+        date_start: '01.01.2024',
+        date_end: '01.03.2025',
+        description: 'Служил в мото-стрелковой дивизии под Калининградом'
+      },
       weddingsData: [
         {
           person: { name: 'Иванова И.И.' },
@@ -80,6 +91,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-</style>
