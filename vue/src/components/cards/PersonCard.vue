@@ -15,14 +15,22 @@
 
     <h2>Биография</h2>
     <div class="person-card__information-text">{{ person.biography }}</div>
+
+    <WeddingsList :weddings="weddings" />
   </div>
 </template>
 
 <script>
+import WeddingsList from '../parts/WeddingsList.vue';
+
 export default {
   props: {
     person: {
       type: Object,
+      required: true
+    },
+    weddings: {
+      type: Array,
       required: true
     }
   },
@@ -30,6 +38,9 @@ export default {
     fullName () {
       return `${this.person.secondName} ${this.person.firstName} ${this.person.patronymic}`;
     }
+  },
+  components: {
+    WeddingsList
   }
 }
 </script>

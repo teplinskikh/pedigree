@@ -22,7 +22,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang ="less">
 .wedding-item {
   background-color: #f2f2f2;
   border: 1px solid #ccc;

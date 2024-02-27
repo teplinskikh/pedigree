@@ -3,13 +3,12 @@
     <section class="p-16">
       Homepage
       <button @click="() => openHelpModal()">Open modal</button>
-      <PersonCard :person="person" />
+      <PersonCard :person="person" :weddings="weddingsData" />
     </section>
     <PhotoPreview size="large" photo="https://mykaleidoscope.ru/x/uploads/posts/2022-10/1666206241_12-mykaleidoscope-ru-p-kartinka-na-zastavku-oboi-12.jpg" />
     <EducationForm :education="education" />
     <WeddingForm :wedding="wedding" />
     <PersonForm :person="person" />
-    <WeddingsList :weddings="weddingsData" />
   </PageLayout>
 </template>
 
@@ -21,7 +20,6 @@ import PhotoPreview from '../ui/PhotoPreview.vue'
 import EducationForm from '../forms/EducationForm.vue'
 import WeddingForm from '../forms/WeddingForm.vue'
 import PersonForm from '../forms/PersonForm.vue'
-import WeddingsList from '../parts/WeddingsList.vue';
 
 export default {
   name: 'HomePage',
@@ -33,7 +31,6 @@ export default {
     EducationForm,
     WeddingForm,
     PersonForm,
-    WeddingsList
   },
   data () {
     return {
@@ -69,12 +66,12 @@ export default {
       },
       weddingsData: [
         {
-          person: { name: 'Иванов И.И.' },
+          person: { name: 'Иванова И.И.' },
           date_start: '1999',
           date_end: ''
         },
         {
-          person: { name: 'Петров П.И.' },
+          person: { name: 'Петрова П.И.' },
           date_start: '2010',
           date_end: '2020'
         }
