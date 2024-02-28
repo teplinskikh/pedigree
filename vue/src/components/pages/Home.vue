@@ -4,7 +4,7 @@
       Homepage
       <button @click="() => openHelpModal()">Open modal</button>
       <ElButton type="primary">Кнопка</ElButton>
-      <PersonCard :person="person" :weddings="weddingsData" />
+      <PersonCard :person="person" />
       <PhotoPreview size="large" photo="https://mykaleidoscope.ru/x/uploads/posts/2022-10/1666206241_12-mykaleidoscope-ru-p-kartinka-na-zastavku-oboi-12.jpg" />
       <EducationForm :education="education" />
       <WeddingForm :wedding="wedding" />
@@ -49,7 +49,19 @@ export default {
         children: ['y3g46yf34fy636b', '3345fg35yg34f3f46'],
         biography: 'Родился в ...',
         activity: 'Бухгалтер',
-        photo: '/pictures/ivan.jpg'
+        photo: '/pictures/ivan.jpg',
+        weddingsData: [
+          {
+          person: { name: 'Иванова И.И.' },
+          date_start: '2021',
+          date_end: ''
+          },
+          {
+          person: { name: 'Петрова П.И.' },
+          date_start: '2010',
+          date_end: '2020'
+          }
+        ]
       },
       wedding: {
         partner: {
@@ -74,19 +86,7 @@ export default {
         date_start: '01.01.2024',
         date_end: '01.03.2025',
         description: 'Служил в мото-стрелковой дивизии под Калининградом'
-      },
-      weddingsData: [
-        {
-          person: { name: 'Иванова И.И.' },
-          date_start: '1999',
-          date_end: ''
-        },
-        {
-          person: { name: 'Петрова П.И.' },
-          date_start: '2010',
-          date_end: '2020'
-        }
-      ]
+      }
     }
   }
 }

@@ -16,7 +16,7 @@
     <h2>Биография</h2>
     <div class="person-card__information-text">{{ person.biography }}</div>
 
-    <WeddingsList :weddings="weddings" />
+    <WeddingsList :weddings="person.weddingsData" />
   </div>
 </template>
 
@@ -24,6 +24,9 @@
 import WeddingsList from '../parts/WeddingsList.vue';
 
 export default {
+  components: {
+    WeddingsList
+  },
   props: {
     person: {
       type: Object,
@@ -38,9 +41,6 @@ export default {
     fullName () {
       return `${this.person.secondName} ${this.person.firstName} ${this.person.patronymic}`;
     }
-  },
-  components: {
-    WeddingsList
   }
 }
 </script>

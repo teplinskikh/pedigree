@@ -1,11 +1,8 @@
 <template>
   <div class="wedding-item">
     <strong>{{ wedding.person.name }}</strong>
-    <span v-if="wedding.date_end">
-      ({{ wedding.date_start }}-{{ wedding.date_end }})
-    </span>
-    <span v-else>
-      ({{ wedding.date_start }})
+    <span>
+      ({{ wedding.date_start }}{{ wedding.date_end ? '-' + wedding.date_end : '' }})
     </span>
   </div>
 </template>
