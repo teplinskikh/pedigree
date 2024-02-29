@@ -2,7 +2,7 @@
   <div class="wedding-item">
     <strong>{{ wedding.person.name }}</strong>
     <span>
-      ({{ wedding.date_start }}{{ wedding.date_end ? '-' + wedding.date_end : '' }})
+      ({{ wedding.date_start }}<template v-if="wedding.date_end"> - {{ wedding.date_end }}</template>)
     </span>
   </div>
 </template>

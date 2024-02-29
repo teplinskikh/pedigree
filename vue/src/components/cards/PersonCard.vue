@@ -31,10 +31,6 @@ export default {
     person: {
       type: Object,
       required: true
-    },
-    weddings: {
-      type: Array,
-      required: true
     }
   },
   computed: {

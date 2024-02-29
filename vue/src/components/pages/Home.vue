@@ -52,14 +52,14 @@ export default {
         photo: '/pictures/ivan.jpg',
         weddingsData: [
           {
-          person: { name: 'Иванова И.И.' },
-          date_start: '2021',
-          date_end: ''
+            person: { name: 'Иванова И.И.' },
+            date_start: '2021',
+            date_end: ''
           },
           {
-          person: { name: 'Петрова П.И.' },
-          date_start: '2010',
-          date_end: '2020'
+            person: { name: 'Петрова П.И.' },
+            date_start: '2010',
+            date_end: '2020'
           }
         ]
       },
