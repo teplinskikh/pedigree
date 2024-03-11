@@ -3,13 +3,20 @@
     <section class="p-16">
       Homepage
       <button @click="() => openHelpModal()">Open modal</button>
+
+      <PopOver>
+        <div>Отчество: Фамилия И. О.</div>
+
+        <template slot="popover">
+          <div>Поповер</div>
+        </template>
+      </PopOver>
+
       <ElButton type="primary">Кнопка</ElButton>
-      <PersonCard :person="person" />
-      <PhotoPreview size="large" photo="https://mykaleidoscope.ru/x/uploads/posts/2022-10/1666206241_12-mykaleidoscope-ru-p-kartinka-na-zastavku-oboi-12.jpg" />
-      <EducationForm :education="education" />
-      <WeddingForm :wedding="wedding" />
-      <PersonForm :person="person" />
-      <MilitaryForm :military="military"/>
+      <EducationForm v-model="education" />
+      <WeddingForm v-model="wedding" :persons="persons" />
+      <PersonForm v-model="person" />
+      <WorkForm v-model="workData"/>
     </section>
   </PageLayout>
 </template>
@@ -17,24 +24,42 @@
 <script>
 import PageLayout from '../parts/PageLayout'
 import { helpModal } from "@/mixins/modals"
-import PersonCard from '@/components/cards/PersonCard.vue'
-import PhotoPreview from '../ui/PhotoPreview.vue'
 import EducationForm from '../forms/EducationForm.vue'
 import WeddingForm from '../forms/WeddingForm.vue'
 import PersonForm from '../forms/PersonForm.vue'
-import MilitaryForm from '../forms/MilitaryForm.vue'
+import PopOver from "@/components/ui/PopOver"
+import { mapGetters } from 'vuex'
+import WorkForm from '../forms/WorkForm.vue'
+
 
 export default {
-  name: 'HomePage',
   mixins: [helpModal],
+  name: 'HomePage',
   components: {
     PageLayout,
-    PhotoPreview,
-    PersonCard,
     EducationForm,
     WeddingForm,
     PersonForm,
-    MilitaryForm,
+    PopOver,
+    WorkForm,
+  },
+  computed: {
+    ...mapGetters('persons', [
+      'filteredPersons'
+    ]),
+    persons() {
+      const customFilter = (person) => {
+        const partnerGender = this.person.gender === 'male' ? 'female' : 'male'
+        const birthDate = new Date(this.person.birthDate)
+        const deathDate = new Date(this.person.dieDate)
+        return (
+          person.gender !== partnerGender &&
+          (!person.dieDate || new Date(person.dieDate) >birthDate) &&
+          (!person.birthDate|| new Date(person.birthDate) < deathDate)
+        )
+      }
+      return this.filteredPersons(customFilter) || []
+    }
   },
   data () {
     return {
@@ -69,8 +94,8 @@ export default {
           name: 'Ivan',
           second_name: 'Ivanov'
         },
-        date_start: '01.01.2024',
-        date_end: '01.02.2024'
+        date_start: '01.01.2020',
+        date_end: '01.02.2022'
       },
       education: {
         type: 'Бакалавриат',
@@ -78,16 +103,37 @@ export default {
         startDate: '01.09.2019',
         endDate: '31.08.2023',
         institutionName: 'ВГУ',
-        institutionCity: ''
+        institutionCity: 'Воронеж'
       },
-      military: {
-        type: 'Контракт',
-        rank: 'Рядовой',
-        date_start: '01.01.2024',
-        date_end: '01.03.2025',
-        description: 'Служил в мото-стрелковой дивизии под Калининградом'
+      military: [
+        {
+          type: 'Контракт',
+          rank: 'Рядовой',
+          startDate: '01.01.2024',
+          endDate: '01.03.2025',
+          description: 'Служил в мото-стрелковой дивизии под Калининградом'
+        },
+        {
+          type: 'Контракт2',
+          rank: 'Рядовой',
+          startDate: '01.01.2024',
+          endDate: '01.03.2025',
+          description: 'Служил в мото-стрелковой дивизии под Калининградом'
+        }
+      ],
+      workData: {
+        place: "Россия, Воронеж",
+        organization: "RedCollar",
+        startDate: "01.01.2023",
+        endDate: "31.12.2023",
+        position: "Младший инженер-программист",
+        description: "Клёвый чел"
       }
     }
+  },
+  mounted () {
+    this.$router.push({ path: '/person/1' })
   }
 }
 </script>
+ 

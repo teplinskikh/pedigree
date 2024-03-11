@@ -1,16 +1,16 @@
 <template>
   <div class="custom-form">
     <ElInput
-      v-model="type"
+      v-model="place"
       class="custom-form__input"
       type="text"
-      placeholder="Тип"
+      placeholder="Страна, город"
     />
     <ElInput
-      v-model="rank"
+      v-model="organization"
       class="custom-form__input"
       type="text"
-      placeholder="Звание, должность"
+      placeholder="Организация"
     />
     <ElDatePicker
       v-model="startDate"
@@ -18,7 +18,7 @@
       type="date"
       format="dd.MM.yyyy"
       value-format="dd.MM.yyyy"
-      placeholder="Дата начала службы"
+      placeholder="Дата начала"
     />
     <ElDatePicker
       v-model="endDate"
@@ -26,9 +26,17 @@
       type="date"
       format="dd.MM.yyyy"
       value-format="dd.MM.yyyy"
-      placeholder="Дата конца службы"
+      placeholder="Дата завершения"
     />
     <div class="custom-form__full-width">
+      <ElInput
+        v-model="position"
+        class="custom-form__input"
+        type="text"
+        placeholder="Должность"
+      />
+     </div>
+     <div class="custom-form__full-width">
       <ElInput
         v-model="description"
         class="custom-form__input"
@@ -41,7 +49,7 @@
 
 <script>
 export default {
-  name: 'MilitaryForm',
+  name: 'WorkForm',
   model: {
     prop: 'value',
     event: 'change'
@@ -53,20 +61,20 @@ export default {
     }
   },
   computed: {
-    type: {
+    place: {
       get() {
-        return this.value.type
+        return this.value.place
       },
       set(value) {
-        this.emitChange({ type: value })
+        this.emitChange({ place: value })
       }
     },
-    rank: {
+    organization: {
       get() {
-        return this.value.rank
+        return this.value.organization
       },
       set(value) {
-        this.emitChange({ rank: value })
+        this.emitChange({ organization: value })
       }
     },
     startDate: {
@@ -83,6 +91,14 @@ export default {
       },
       set(value) {
         this.emitChange({ endDate: value })
+      }
+    },
+    position: {
+      get() {
+        return this.value.position
+      },
+      set(value) {
+        this.emitChange({ position: value })
       }
     },
     description: {
@@ -107,4 +123,3 @@ export default {
 
 <style>
 </style>
- 
