@@ -1,6 +1,6 @@
 <template>
   <div class="custom-form">
-    <PopOver class="pop-over">
+    <PopOver>
       <ElInput
         v-model="type"
         class="custom-form__input"
@@ -9,7 +9,10 @@
       />
 
       <template slot="popover">
-        <InputHelper :options="hints" @select="selectHint" class="myclass"></InputHelper>
+        <InputHelper 
+          :options="hints" 
+          @select="(hint) => selectHint(hint)">
+        </InputHelper>
       </template>
     </PopOver>
     <ElInput
@@ -58,11 +61,6 @@ export default {
   components: {
     PopOver,
     InputHelper
-  },
-  data() {
-    return {
-      hints: ['Бакалавриат', 'Магистратура', 'Аспирантура']
-    }
   },
   model: {
     prop: 'value',
@@ -122,6 +120,11 @@ export default {
       set (value) {
         this.emitChange({ institutionCity: value })
       }
+    },
+    hints: {
+      get() {
+        return ['Бакалавриат', 'Магистратура', 'Аспирантура']
+      }
     }
   },
   methods: {
@@ -138,8 +141,5 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
-.pop-over {
-  z-index: 999;
-}
+<style>
 </style>

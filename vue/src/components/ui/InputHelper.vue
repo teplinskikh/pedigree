@@ -1,6 +1,6 @@
 <template>
   <div class="input-helper">
-    <div v-for="option in options" :key="option" class="input-helper__item" @click="selectOption(option)">
+    <div v-for="option in options" :key="option" class="input-helper__item" @click="() => selectOption(option)">
       {{ option }}
     </div>
   </div>
@@ -32,10 +32,10 @@ export default {
   &__item {
     cursor: pointer;
     padding: 5px;  
-  }
-  
-  &__item:hover {
-    background-color: #e0e0e0;
+
+    &:hover {
+      background-color: #e0e0e0; 
+    }
   }
 }
 </style>
