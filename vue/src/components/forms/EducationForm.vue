@@ -1,11 +1,17 @@
 <template>
   <div class="custom-form">
-    <ElInput
-      v-model="type"
-      class="custom-form__input"
-      type="text"
-      placeholder="Тип"
-    />
+    <PopOver class="pop-over">
+      <ElInput
+        v-model="type"
+        class="custom-form__input"
+        type="text"
+        placeholder="Тип"
+      />
+
+      <template slot="popover">
+        <InputHelper :options="hints" @select="selectHint" class="myclass"></InputHelper>
+      </template>
+    </PopOver>
     <ElInput
       v-model="level"
       class="custom-form__input"
@@ -44,8 +50,20 @@
 </template>
 
 <script>
+import PopOver from '../ui/PopOver.vue'
+import InputHelper from '../ui/InputHelper.vue'
+
 export default {
   name: 'EducationForm',
+  components: {
+    PopOver,
+    InputHelper
+  },
+  data() {
+    return {
+      hints: ['Бакалавриат', 'Магистратура', 'Аспирантура']
+    }
+  },
   model: {
     prop: 'value',
     event: 'change'
@@ -112,10 +130,16 @@ export default {
         ...this.value,
         ...param
       })
+    },
+    selectHint(hint) {
+      this.type = hint;
     }
   }
 }
 </script>
 
-<style>
+<style scoped lang="less">
+.pop-over {
+  z-index: 999;
+}
 </style>
