@@ -24,14 +24,15 @@ export default {
     
 <style scoped lang = "less">
 .input-helper {
-  background-color: #f5f5f5;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 10px;
-
   &__item {
+    background-color: #ffffff;
     cursor: pointer;
-    padding: 5px;  
+    padding: 10px 30px 10px 5px;
+    border: 1px solid #ddd; 
+    border-radius: 5px;
+    margin-bottom: 5px; 
+    box-shadow: 0px 5px 5px #ddd;
+    color: #9d9d9d;  
 
     &:hover {
       background-color: #e0e0e0; 
