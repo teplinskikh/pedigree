@@ -8,6 +8,7 @@
     
 <script>
 export default {
+  name: 'InputHelper',
   props: {
     options: {
       type: Array,

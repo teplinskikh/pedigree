@@ -11,8 +11,8 @@
       <template slot="popover">
         <InputHelper 
           :options="hints" 
-          @select="(hint) => selectHint(hint)">
-        </InputHelper>
+          @select="(hint) => selectHint(hint)"
+        />
       </template>
     </PopOver>
     <ElInput
