@@ -49,20 +49,38 @@
         {{ biography }}
       </div>
 
+      <h2 id="education-section">Образование</h2>
+      <div v-if="person.educations" class="custom-grid">
+        <EducationItem 
+          v-for="(education, index) in person.educations" 
+          :key="index" 
+          :education="education" 
+        />
+      </div>
+      <div v-else class="person-card__information-text">
+        Информации нет
+      </div>
+
       <h2 id="weddings-section">Брачные союзы</h2>
-      <WeddingsList
-        v-if="person.weddings && person.weddings.length > 0"
-        :weddings="person.weddings"
-      />
+      <div v-if="person.weddings" class="custom-grid">
+        <WeddingItem 
+          v-for="(wedding, index) in person.weddings" 
+          :key="index" 
+          :wedding="wedding" 
+        />
+      </div>
       <div v-else class="person-card__information-text">
         Информации нет
       </div>
 
       <h2 id="military-section">Военная служба</h2>
-      <MilitaryList
-        v-if="person.militaries && person.militaries.length > 0"
-        :militaries="person.militaries"
-      />
+      <div v-if="person.militaries" class="custom-grid">
+        <MilitaryItem
+          v-for="(military, index) in person.militaries"
+          :key="index"
+          :military="military"
+        />
+      </div>
       <div v-else class="person-card__information-text">
         Информации нет
       </div>
@@ -71,21 +89,23 @@
 </template>
 
 <script>
-import WeddingsList from '../parts/WeddingsList.vue';
-import MilitaryList from '../parts/MilitaryList.vue';
-import PhotoPreview from '../ui/PhotoPreview.vue';
-import RelateButton from '@/components/ui/RelateButton.vue';
-import PopOver from '../ui/PopOver.vue';
-import PersonPreviewCard from './PersonPreviewCard.vue';
-import { formatPersonName } from '@/services/formatPersonName';
-import { mapGetters } from 'vuex';
-import { maskDatetime, defaultImage } from '@/utils/mask';
+import WeddingItem from '../parts/WeddingItem.vue'
+import EducationItem from '../parts/EducationItem.vue'
+import MilitaryItem from '../parts/MilitaryItem.vue'
+import PhotoPreview from '../ui/PhotoPreview.vue'
+import RelateButton from '@/components/ui/RelateButton.vue'
+import PopOver from '../ui/PopOver.vue'
+import PersonPreviewCard from './PersonPreviewCard.vue'
+import { formatPersonName } from '@/services/formatPersonName'
+import { mapGetters } from 'vuex'
+import { maskDatetime, defaultImage } from '@/utils/mask'
 
 export default {
   name: 'PersonCard',
   components: {
-    WeddingsList,
-    MilitaryList,
+    EducationItem,
+    WeddingItem,
+    MilitaryItem,
     PhotoPreview,
     RelateButton,
     PopOver,
