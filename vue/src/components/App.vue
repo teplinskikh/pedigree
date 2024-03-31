@@ -10,8 +10,9 @@
 </template>
 
 <script>
-import ModalContainer from "@/components/parts/ModalContainer";
+import ModalContainer from "@/components/parts/ModalContainer"
 import ScreenSaver from "@/components/modals/ScreenSaver.vue"
+
 export default {
   components: {
     ModalContainer,

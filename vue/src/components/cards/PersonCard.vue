@@ -1,5 +1,5 @@
 <template>
-  <div class="person-card">
+  <div v-if="person" class="person-card">
     <div>
       <PhotoPreview size="large" :photo="photo"/>
     </div>
@@ -95,57 +95,62 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('persons',['getPersonsByIds', 'filteredPersons']),
-    ...mapGetters('settings', ['getAccess']),
-    activity (){
-      if (this.needHide){
+    ...mapGetters('persons', [
+      'getPersonsByIds',
+      'filteredPersons'
+    ]),
+    ...mapGetters('settings', [
+      'getAccess'
+    ]),
+    activity () {
+      if (this.needHide) {
         return 'Информация скрыта'
       }
       return this.person.activity || 'Информации нет'
     },
-    biography (){
-      if (this.needHide){
+    biography () {
+      if (this.needHide) {
         return 'Информация скрыта'
       }
       return this.person.biography || 'Информации нет'
     },
     birthDate () {
-      if (!this.person.birthDate){
+      if (!this.person.birthDate) {
         return null
       }
-      if (!this.needHide){
+      if (!this.needHide) {
         return this.person.birthDate
       }
       return maskDatetime(this.person.birthDate)
     },
     children () {
-      if (!this.person.children){
+      if (!this.person.children) {
         return []
       }
-      return this.getPersonsByIds(this.person.children);
+      return this.getPersonsByIds(this.person.children.map(i => i.child))
     },
     dieDate () {
-      if (!this.person.dieDate){
+      if (!this.person.dieDate) {
         return null
       }
-      if (!this.needHide){
+      if (!this.needHide) {
         return this.person.dieDate
       }
       return maskDatetime(this.person.dieDate)
     },
     fullName () {
-      return formatPersonName(this.person, {short: true, access: this.needHide});
+      return formatPersonName(this.person, {short: true, access: this.needHide})
     },
-    needHide (){
+    needHide () {
       return this.person.access && this.getAccess
     },
-    photo (){
-      if (!this.needHide){
+    photo () {
+      if (!this.needHide) {
         return this.person.photo
       }
       return defaultImage
     },
-    parents (){
+    parents () {
       return this.filteredPersons(person => person.children && person.children.includes(this.person.id))
     }
   }
