@@ -1,9 +1,7 @@
 <template>
   <PageLayout>
     <ScrollingPanel :sections="sections" />
-
     <NavigationPanel />
-
     <section class="p-16">
       <PersonCard :person="person" />
     </section>
@@ -20,9 +18,6 @@ import { emptyPerson } from '@/services/person'
 
 export default {
   name: 'PersonPage',
-  model: {
-    prop: 'person'
-  },
   components: {
     PageLayout,
     PersonCard,
