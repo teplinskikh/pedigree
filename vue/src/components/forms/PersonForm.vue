@@ -79,6 +79,19 @@
           value=false
         />
       </ElSelect>
+      <ElSelect
+        v-model="removed"
+        class="custom-form__input"
+        placeholder="Удалить">
+        <ElOption
+          label="Удалён"
+          value="true"
+        />
+        <ElOption
+          label="Виден"
+          value="false"
+        />
+      </ElSelect>
     </div>
     
     <h2>Военная служба</h2>
@@ -310,25 +323,24 @@ export default {
       }
     },
     access: {
-      get () {
-        if (this.value.access) {
-          return 'true'
-        }
-        else {
-          return 'false'
-        }
+      get(){
+        return this.value.access.toString()
       },
-      set (value) {
-        if (value == 'true') {
-          value = true
-        }
-        else {
-          value = false
-        }
+      set(value){
         this.emitFormData({
-          access: value
+          access: value == 'true'
         })
-      }
+      },
+    },
+    removed: {
+      get(){
+        return this.value.removed.toString()
+      },
+      set(value){
+        this.emitFormData({
+          removed: value == 'true'
+        })
+      },
     },
 
     ...mapGetters ('persons', [
