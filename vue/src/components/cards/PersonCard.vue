@@ -29,9 +29,9 @@
         <div v-if="person.children && person.children.length > 0">
           <span v-for="child in children" :key="child.id">
             <PopOver>
-              <RelateButton :person="child" relate="child" />
+              <RelateButton :person="child" relate="child"/>
               <template slot="popover">
-                <PersonPreviewCard :person="child" />
+                <PersonPreviewCard :person="child"/>
               </template>
             </PopOver>
           </span>
@@ -51,10 +51,10 @@
 
       <h2 id="education-section">Образование</h2>
       <div v-if="person.educations" class="custom-grid">
-        <EducationItem 
-          v-for="(education, index) in person.educations" 
-          :key="index" 
-          :education="education" 
+        <EducationItem
+          v-for="(education, index) in person.educations"
+          :key="index"
+          :education="education"
         />
       </div>
       <div v-else class="person-card__information-text">
@@ -63,10 +63,10 @@
 
       <h2 id="weddings-section">Брачные союзы</h2>
       <div v-if="person.weddings" class="custom-grid">
-        <WeddingItem 
-          v-for="(wedding, index) in person.weddings" 
-          :key="index" 
-          :wedding="wedding" 
+        <WeddingItem
+          v-for="(wedding, index) in person.weddings"
+          :key="index"
+          :wedding="wedding"
         />
       </div>
       <div v-else class="person-card__information-text">
@@ -162,7 +162,7 @@ export default {
       return maskDatetime(this.person.dieDate)
     },
     fullName () {
-      return formatPersonName(this.person, {short: true, access: this.needHide})
+      return formatPersonName(this.person, { short: false, access: this.needHide })
     },
     needHide () {
       return this.person.access && this.getAccess
@@ -177,7 +177,7 @@ export default {
       return this.filteredPersons(person => person.children && person.children.includes(this.person.id))
     },
     genderClass () {
-      return `person-card__status-indicator__${this.person.gender.toLowerCase()}`
+      return `person-card__status-indicator__${ this.person.gender.toLowerCase() }`
     }
   }
 }
@@ -207,7 +207,7 @@ export default {
     align-items: center;
     gap: 10px;
   }
-  
+
   &__status-indicator {
     width: 15px;
     height: 15px;
@@ -232,5 +232,5 @@ export default {
     flex-direction: column;
     align-items: center;
   }
-} 
+}
 </style>
