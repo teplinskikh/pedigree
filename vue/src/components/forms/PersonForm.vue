@@ -24,6 +24,13 @@
       type="text"
       placeholder="Пол"
     />
+    <ElInput
+      v-model="maidenName"
+      v-if="gender === 'female'"
+      class="custom-form__full-width"
+      type="text"
+      placeholder="Девичья фамилия"
+    />
     <ElDatePicker
       v-model="birthDate"
       class="custom-form__input"
@@ -31,6 +38,7 @@
       format="dd.MM.yyyy"
       value-format="dd.MM.yyyy"
       placeholder="Дата рождения"
+      :picker-options="birthPickerOptions"
     />
     <ElDatePicker
       v-model="dieDate"
@@ -39,6 +47,7 @@
       format="dd.MM.yyyy"
       value-format="dd.MM.yyyy"
       placeholder="Дата смерти"
+      :picker-options="diePickerOptions"
     />
     <div class="custom-form__full-width">
       <ElInput
@@ -205,6 +214,7 @@ import { mapGetters } from 'vuex'
 import EducationForm from '../forms/EducationForm.vue'
 import WorkForm from '../forms/WorkForm.vue'
 import { emptyWedding, emptyWork, emptyMilitary, emptyEducation } from '@/services/person'
+import { parseDateString } from '@/services/datePickerOptions'
 
 export default {
   name: 'PersonForm',
@@ -249,6 +259,14 @@ export default {
       },
       set (value) {
         this.emitFormData({ patronymicName: value })
+      }
+    },
+    maidenName: {
+      get() {
+        return this.value.maidenName;
+      },
+      set(value) {
+        this.emitFormData({ maidenName: value });
       }
     },
     gender: {
@@ -352,9 +370,30 @@ export default {
         )
       }
       return this.filteredPersons(customFilter) || []
+    },
+    birthPickerOptions () {
+      return {
+        disabledDate: time => {
+          if (this.dieDate) {
+            const dieDate = this.parseDateString(this.dieDate)
+            return dieDate && time.getTime() > dieDate.getTime()
+          }
+        }
+      }
+    },
+    diePickerOptions () {
+      return {
+        disabledDate: time => {
+          if (this.birthDate) {
+            const birthDate = this.parseDateString(this.birthDate)
+            return birthDate && time.getTime() < birthDate.getTime()
+          }
+        }
+      }
     }
   },
   methods: {
+    parseDateString,
     emitFormData (param) {
       this.$emit('change', {
         ...this.value,
