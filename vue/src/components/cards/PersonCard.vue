@@ -21,7 +21,7 @@
             </template>
           </PopOver>
         </div>
-        <p v-else>Нет родителей</p>
+        <div v-else>Информации нет</div>
       </div>
 
       <h2 id="childs-section">Дети</h2>
@@ -36,7 +36,7 @@
             </PopOver>
           </span>
         </div>
-        <p v-else>Нет детей</p>
+        <div v-else>Детей нет</div>
       </div>
 
       <h2 id="activity-section">Род деятельности</h2>
@@ -50,7 +50,7 @@
       </div>
 
       <h2 id="education-section">Образование</h2>
-      <div v-if="person.educations" class="custom-grid">
+      <div v-if="person.educations && person.educations.length" class="custom-grid">
         <EducationItem
           v-for="(education, index) in person.educations"
           :key="index"
@@ -62,7 +62,7 @@
       </div>
 
       <h2 id="weddings-section">Брачные союзы</h2>
-      <div v-if="person.weddings" class="custom-grid">
+      <div v-if="person.weddings && person.weddings.length" class="custom-grid">
         <WeddingItem
           v-for="(wedding, index) in person.weddings"
           :key="index"
@@ -74,7 +74,7 @@
       </div>
 
       <h2 id="military-section">Военная служба</h2>
-      <div v-if="person.militaries" class="custom-grid">
+      <div v-if="person.militaries && person.militaries.length" class="custom-grid">
         <MilitaryItem
           v-for="(military, index) in person.militaries"
           :key="index"
@@ -182,7 +182,8 @@ export default {
       })
     },
     genderClass () {
-      return `person-card__status-indicator__${ this.person.gender.toLowerCase() }`
+      const gender = this.person.gender || ''
+      return `person-card__status-indicator__${ gender.toLowerCase() }`
     }
   }
 }
@@ -217,7 +218,6 @@ export default {
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    margin-bottom: 5px;
 
     &__female {
       background-color: #ACFFE6;
