@@ -7,16 +7,30 @@
         placeholder="Поиск"
         clearable
       />
-      <div 
-        v-if="persons.length > 0" 
+      <ElSelect
+        v-model="filterRemovedData"
+        class="custom-form__input"
+        placeholder="Показать всех">
+        <ElOption
+          label="Показать всех"
+          value=false
+        />
+        <ElOption
+          label="Показать доступных"
+          value=true
+        />
+      </ElSelect>
+      <div
+        v-if="persons && persons.length > 0"
         class="person-container__wrapper"
       >
-        <RouterLink 
+        <RouterLink
           class="navigation-panel__link__wrapper"
-          :to="{ name: 'PERSON', params: { id: person.id } }"
-          v-for="(person, id) in persons" :key="id"
+          :to="{ name: $routes.PERSON, params: { id: person.id } }"
+          v-for="(person, id) in persons"
+          :key="id"
         >
-          <WidePersonCard :person="person"/>
+          <WidePersonCard :person="person" />
         </RouterLink>
       </div>
       <div v-else>
@@ -27,9 +41,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import PageLayout from '../parts/PageLayout.vue';
-import WidePersonCard from '../cards/WidePersonCard.vue';
+import { mapGetters } from 'vuex'
+import PageLayout from '../parts/PageLayout.vue'
+import WidePersonCard from '../cards/WidePersonCard.vue'
 
 export default {
   name: 'PersonList',
@@ -40,6 +54,7 @@ export default {
   data () {
     return {
       search: '',
+      filterRemoved: false
     }
   },
   computed: {
@@ -47,26 +62,38 @@ export default {
       'getAllPersons',
       'filteredPersons'
     ]),
+    filterRemovedData: {
+      get(){
+        this.filterRemoved.toString()
+      },
+      set(value){
+        this.filterRemoved = value == true
+      }
+    },
     fields () {
       return ['id', 'firstName', 'secondName', 'patronymicName', 'birthDate']
     },
     persons () {
-      if(this.search.length >= 3) {
-        return this.filteredPersons(this.searchFunc)
-      }
-      return this.getAllPersons.persons
+      return this
+        .filteredPersons((person) => {
+            return !this.filterRemoved || !person.removed
+        })
+        .filter(this.searchFunc)
     },
   },
   methods: {
-    searchFunc(person) {
+    searchFunc (person) {
+      if (this.search.length < 3){
+        return true
+      }
       return this.fields.some((field) => {
-        if(person[field]) {
+        if (person[field]) {
           return person[field].toString().toLowerCase().includes(this.search.toLowerCase())
         }
       })
     }
   }
-};
+}
 </script>
 
 <style scoped lang="less">
@@ -75,6 +102,7 @@ export default {
   flex-direction: column;
   gap: 20px;
   padding-bottom: 30px;
+
   &__wrapper {
     display: flex;
     flex-direction: column;

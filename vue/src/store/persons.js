@@ -11,8 +11,9 @@ const initialState = [
     patronymicName: 'Иванович',
     gender: 'male',
     military: [],
-    children: ['1','2'],
-    weddings: []
+    children: ['2'],
+    weddings: [],
+    photo: require('@/assets/logo.png'),
   },
   {
     id: '2',
@@ -34,6 +35,7 @@ export default {
     getAllPersons: (state) => state.persons,
     getPersonById: (state) => (id) => state.persons.find((person) => person.id === id),
     filteredPersons: (state) => (filterFunction) => state.persons.filter(filterFunction),
+    getAvailablePersons: (state) => state.persons.filter((person) => !person.removed),
     getPersonsByIds: (state) => (ids) => state.persons.filter(person => ids.includes(person.id)),
     getCenter: (state) => state.center
   },
@@ -43,16 +45,24 @@ export default {
       localStorage.setItem(PERSONS, JSON.stringify(state.persons))
     },
     deletePerson: (state, payload) => {
+      console.log(payload)
+      console.log(state.persons)
       state.persons = state.persons.filter((person) => {
+        console.log(person)
         const isNotRemove = person.id !== payload
 
         if (isNotRemove) {
-          person.weddings = person.weddings.filter((wedding) => wedding.partnerId !== payload)
-          person.children = person.children.filter((childId) => childId !== payload)
+          if (person.weddings) {
+            person.weddings = person.weddings.filter((wedding) => wedding.partnerId !== payload)
+          }
+          if (person.children) {
+            person.children = person.children.filter((childId) => childId !== payload)
+          }
         }
 
         return isNotRemove
       })
+      console.log(state.persons)
 
       localStorage.setItem(PERSONS, JSON.stringify(state.persons))
     },
@@ -75,9 +85,10 @@ export default {
       commit("addPerson", person)
       return resolve(person)
     }),
-    deletePerson: ({ commit }, payload) => {
+    deletePerson: ({ commit }, payload) => new Promise((resolve) => {
       commit("deletePerson", payload)
-    },
+      return resolve(payload)
+    }),
     editPerson: ({ commit }, payload) => {
       commit("editPerson", payload)
     },

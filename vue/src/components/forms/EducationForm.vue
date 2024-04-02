@@ -28,6 +28,7 @@
       format="dd.MM.yyyy"
       value-format="dd.MM.yyyy"
       placeholder="Дата начала обучения"
+      :picker-options="startPickerOptions"
     />
     <ElDatePicker
       v-model="endDate"
@@ -36,15 +37,16 @@
       format="dd.MM.yyyy"
       value-format="dd.MM.yyyy"
       placeholder="Дата завершения обучения"
+      :picker-options="endPickerOptions"
     />
     <ElInput
-      v-model="institutionName"
+      v-model="name"
       class="custom-form__input"
       type="text"
       placeholder="Название учреждения"
     />
     <ElInput
-      v-model="institutionCity"
+      v-model="city"
       class="custom-form__input"
       type="text"
       placeholder="Город учреждения"
@@ -55,6 +57,7 @@
 <script>
 import PopOver from '../ui/PopOver.vue'
 import InputHelper from '../ui/InputHelper.vue'
+import { parseDateString } from '@/services/datePickerOptions'
 
 export default {
   name: 'EducationForm',
@@ -105,29 +108,50 @@ export default {
         this.emitChange({ endDate: value })
       }
     },
-    institutionName: {
+    name: {
       get () {
-        return this.value.institutionName
+        return this.value.name
       },
       set (value) {
-        this.emitChange({ institutionName: value })
+        this.emitChange({ name: value })
       }
     },
-    institutionCity: {
+    city: {
       get () {
-        return this.value.institutionCity
+        return this.value.city
       },
       set (value) {
-        this.emitChange({ institutionCity: value })
+        this.emitChange({ city: value })
       }
     },
     hints: {
       get() {
         return ['Бакалавриат', 'Магистратура', 'Аспирантура']
       }
+    },
+    startPickerOptions () {
+      return {
+        disabledDate: time => {
+          if (this.endDate) {
+            const endDate = this.parseDateString(this.endDate)
+            return endDate && time.getTime() > endDate.getTime()
+          }
+        }
+      }
+    },
+    endPickerOptions () {
+      return {
+        disabledDate: time => {
+          if (this.startDate) {
+            const startDate = this.parseDateString(this.startDate)
+            return startDate && time.getTime() < startDate.getTime()
+          }
+        }
+      }
     }
   },
   methods: {
+    parseDateString,
     emitChange (param) {
       this.$emit('change', {
         ...this.value,
@@ -135,7 +159,7 @@ export default {
       })
     },
     selectHint(hint) {
-      this.type = hint;
+      this.type = hint
     }
   }
 }
