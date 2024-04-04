@@ -12,7 +12,7 @@
     <div class="carousel">
       <div 
         class="carousel__arrow" 
-        @click="prevImage" 
+        @click="() => prevImage()" 
         v-show="images.length > 1"
       >
         &lt;
@@ -21,16 +21,16 @@
         class="carousel__image-container" 
         v-for="(image, index) in images" 
         :key="image.id" 
-        @click="updateSelectedImage(index)"
+        @click="() => updateSelectedImage(index)"
       >
         <img 
           class="carousel__image-container__image" 
           :src="image.url" :alt="image.title" 
-          :class = "{'carousel__image-container__image__active' : image === images[selectedImage]}" />
+          :class = "{'carousel__image-container__image__active' : index === selectedImage}" />
       </div>
       <div 
         class="carousel__arrow" 
-        @click="nextImage" 
+        @click="() => nextImage()" 
         v-show="images.length > 1"
       >
         &gt;
