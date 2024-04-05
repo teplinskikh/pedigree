@@ -6,14 +6,16 @@
         :src="images[selectedImage].url" 
         :alt="images[selectedImage].title" 
       />
-      <h3>{{ images[selectedImage].title }}</h3>
-      <p>{{ images[selectedImage].description }}</p>
+      <div class="gallery__selected__text">
+        <h3> {{ images[selectedImage].title }}</h3>
+        <p>{{ images[selectedImage].description }}</p>
+      </div>
     </div>
     <div class="carousel">
       <div 
         class="carousel__arrow" 
-        @click="() => prevImage()" 
         v-show="images.length > 1"
+        @click="() => prevImage()" 
       >
         &lt;
       </div>
@@ -26,12 +28,13 @@
         <img 
           class="carousel__image-container__image" 
           :src="image.url" :alt="image.title" 
-          :class = "{'carousel__image-container__image__active' : index === selectedImage}" />
+          :class = "{'carousel__image-container__image__active' : index === selectedImage}" 
+        />
       </div>
       <div 
         class="carousel__arrow" 
-        @click="() => nextImage()" 
         v-show="images.length > 1"
+        @click="() => nextImage()" 
       >
         &gt;
       </div>
@@ -45,10 +48,10 @@ export default {
   props: {
     images: Array
   },
-  data() {
+  data () {
     return {
       selectedImage: 0
-    };
+    }
   },
   methods: {
     updateSelectedImage(index) {
@@ -84,10 +87,18 @@ export default {
 
   &__selected {
     text-align: center;
+    position: relative;
   
     &__image {
       max-width: 100%;
       max-height: 70vh;
+    }
+
+    &__text {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background-color: rgba(256,256,256,0.65)
     }
   }
 
@@ -96,8 +107,6 @@ export default {
     align-items: center;
     justify-content: center;
     margin-top: 20px;
-    
-
   }
 }
   
